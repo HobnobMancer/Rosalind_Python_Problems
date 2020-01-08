@@ -4,23 +4,27 @@
 # Given: Positive integers n≤40 and k≤5.
 # Return: The total number of rabbit pairs that will be present after n months, if we begin with 1 pair and in each generation, every pair of reproduction-age rabbits produces a litter of k rabbit pairs (instead of only 1 pair).
 
-# the nth month
+# Define the nth month
 nthMonth = 5
-# number of kits per litter
+# Define number of kits per litter
 kits = 3
 
-breedingMonths = range(1, 40)
-monthN = [breedingMonths]
-for i in monthN:
-    print(i)
-    i = i + 1
-print(monthN)
+# define function based on Fibonacci sequence to calcuate the total number of rabbit pairs in the nth month
+def rabbitFibonacci(n):
+    """Function to caclulate the number of rabbit paris in the nth month"""
+    """Based upon the Fibonacci sequence"""
+    """When calling the function 'n' represents the nth term for the sequence to terminate at"""
+    # 1 breading pair in first month
+    if n==1:
+        return 1
+    # 1 breeding pair in second month
+    elif n==2:
+        return 1
+    # breeding pairs produce litters of 3
+    else:
+        return (rabbitFibonacci(n-1)+(rabbitFibonacci(n-2))*kits)
 
-#define monthN[1]
-monthN.append(kits)
-#define monthN[2]
-monthN.append(kits)
+# call rabbitFibonacci function and print returned value
+print("The number of rabbit pairs is", rabbitFibonacci(nth_month))
 
-# months of breeding
-
-
+# sample output is 19
