@@ -17,6 +17,6 @@ Aconda:
 	pydocstyle
 	pylint
 
-Problems are culminated in two groups:
-Python Village - introduction problems covering basic Python concepts (dinstriguished by file names starting with INIn when 'n' is a number)
+Problems are culminated in two groups, contained in separate folders titled with their respective names:
+Python Village - introduction problems covering basic Python concepts
 Python Stronghold - more complex problems, with a biological context requiring the solver to identify the necessary Python elements needed to solve the problem
