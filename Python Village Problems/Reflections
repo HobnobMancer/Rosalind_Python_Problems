@@ -1,0 +1,11 @@
+Confidence areas:
+- for loops
+- breaking down a given problem into smaller computaional tasks
+
+Areas requiring more practise:
+- opening and modiyfing external files using Python
+
+General notes and important things to remember:
+- strings are immutable
+- to pass a string through a conditional loop it must first be converted to a string using list(string_name)
+- to convert a list to a string use " ".join(list_name)
