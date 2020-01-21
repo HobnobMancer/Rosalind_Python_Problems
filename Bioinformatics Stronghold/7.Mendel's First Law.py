@@ -9,16 +9,31 @@ n = 2 # number of homozygous recessive individuals
 
 # Calculating probability of individual having dominant phenotype
 # when first mate is k and second mate is k
-FkSk = (k / (k+m+n)) * ((k-1)/(k-1)+m+n)
+FkSk = (k / (k+m+n)) * ((k-1) / ((k-1)+m+n))
+
+# when first mate is k and second mate is m
+FkSm = (k / (k+m+n)) * (m / ((k-1)+m+n))
+
+# when first mate is k and second mate is m
+FkSn = (k / (k+m+n)) * (n / ((k-1)+m+n))
 
 # when first mate is m and second mate is m
 FmSm = (m / (k+m+n)) * ((m-1) / (k+(m-1)+n))
 
-# when first mate is k and second mate is m
-FkSm = (k / (k+m+n)) * (m/(k-1)+m+n)
-
 # when first mate is m and second mate is k
 FmSk = (m / (k+m+n)) * (k / (k+(m-1)+n))
+
+# when first mate is m and second mate is n
+FmSn = (m / (k+m+n)) * (n / (k+(m-1)+n))
+
+# when first mate is n and second mate is n
+FnSn = (n / (k+m+n)) * ((n-1) / (k+m+(n-1)))
+
+# when first mate is n and second mate is k
+FnSk = (n / (k+m+n)) * (k / (k+m+(n-1)))
+
+# when first mate is n and second mate is m
+FnSm = (n / (k+m+n)) * (m / (k+m+(n-1)))
 
 # total probability
 dominantPhenotype = FkSk+FmSm+FmSm+FmSk
