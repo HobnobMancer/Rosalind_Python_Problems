@@ -35,6 +35,18 @@ FnSk = (n / (k+m+n)) * (k / (k+m+(n-1)))
 # when first mate is n and second mate is m
 FnSm = (n / (k+m+n)) * (m / (k+m+(n-1)))
 
-# total probability
-dominantPhenotype = FkSk+FmSm+FmSm+FmSk
+# Probability of at least one partner being dominant, all offspring will show dominant phenotype
+# Mating pairs: kk, km, mk, kn and nk
+probabilityDominantMate = FkSk + FkSm + FmSk + FkSn + FnSk
+
+# Heterozygous mating have 75% chance offspring will have dominant phenotype
+probabilityHeterozygotMate = (FmSm)*0.75
+
+# Heterozygouse with recessive have 50% offspring will have dominant phenotype
+# Mating pairs: mn and nm
+probabilityHeteroAndRecessive = (((FmSn)*0.5)+((FnSm)*0.5))
+
+# total probability offspring will have dominant phenotype
+# Recessive with recessive has 0 probability offspring will have dominant phenotype
+dominantPhenotype = probabilityDominantMate + probabilityHeterozygotMate + probabilityHeteroAndRecessive
 print(dominantPhenotype)
