@@ -37,5 +37,6 @@ for index in substringOccurencePYTHON:
     substringOccurence0BASED.append(substringOccurencePYTHON[i]+1)
     i += 1
 
-print(substringOccurence0BASED)
+print('0-based: ', substringOccurencePYTHON)
+print('1-based: ', substringOccurence0BASED)
 
