@@ -7,8 +7,9 @@
 # Sample data set uses a 1-based not 0-based numbering system
 
 # Define given strings
-givenStringS = "GATATATGCATATACTT"
-givenSubStringT = "ATAT"
+givenStringS = input(' Enter string ')
+givenSubStringT = input('Enter substring ')
+
 
 # Define function to fina all occurences of substring T in string S
 def findALLsubstrings(string, substring):
@@ -22,6 +23,7 @@ def findALLsubstrings(string, substring):
         yield start
         start += 1 # finds overlapping matches, += len(substring) would miss overlapping matches
 
+        
 # Use the function findALLsubstrings to find all occurences of substring T in string S
 substringOccurencePYTHON = list(findALLsubstrings(givenStringS, givenSubStringT))
 print(substringOccurencePYTHON)
