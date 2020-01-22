@@ -10,8 +10,31 @@
 givenStringS = "GATATATGCATATACTT"
 givenSubStringT = "ATAT"
 
-# Use inbuilt .find() function to find occurence of substring T in string S
-substringOccurencePYTHON = givenStringS.find(givenSubStringT) # Python has 0-based numbering
-result = substringOccurencePYTHON + 1 # convert original answer to 1-based numbering
-print(result)
-# this only finds the earilest occurrence of the substring, will need to create own function to find all
+# Define function to fina all occurences of substring T in string S
+def findALLsubstrings(string, substring):
+    """Finds all occurences of a substring in a string
+    Utilises and builds upon inbuild .find() function"""
+
+    start = 0
+    while True:
+        start = string.find(substring, start)
+        if start == -1: return
+        yield start
+        start += 1 # finds overlapping matches, += len(substring) would miss overlapping matches
+
+# Use the function findALLsubstrings to find all occurences of substring T in string S
+substringOccurencePYTHON = list(findALLsubstrings(givenStringS, givenSubStringT))
+print(substringOccurencePYTHON)
+
+# Python uses 0-based numbering, answer needed in 1-based number
+# Convert 0-based to 1-based numbering
+substringOccurence0BASED = []
+i = 1
+
+for index in substringOccurencePYTHON:
+    substringOccurence0BASED.append(substringOccurencePYTHON[i])
+    i += 1
+
+print(substringOccurence0BASED)
+
+# IndexERROR list index out of range
