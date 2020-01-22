@@ -29,12 +29,11 @@ print(substringOccurencePYTHON)
 # Python uses 0-based numbering, answer needed in 1-based number
 # Convert 0-based to 1-based numbering
 substringOccurence0BASED = []
-i = 1
+i = 0
 
 for index in substringOccurencePYTHON:
-    substringOccurence0BASED.append(substringOccurencePYTHON[i])
+    substringOccurence0BASED.append(substringOccurencePYTHON[i]+1)
     i += 1
 
 print(substringOccurence0BASED)
 
-# IndexERROR list index out of range
