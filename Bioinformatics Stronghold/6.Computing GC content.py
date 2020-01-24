@@ -25,20 +25,46 @@ def GCcontentCalculator(string):
     GCcontent = int(((nucleotideCount["C"] + nucleotideCount["G"]) / len(string)) * 100)
 
 
+
+# open file with read only permit, read line by line
 # Open file containing DNA sequences, and assign DNA sequences data to a variable (dnaSeq)
 fastaFILE = open(r"/home/em/PycharmProjects/Rosalind/Bioinformatics Stronghold/CG_content_testFile", "rt")
-dnaSeq = fastaFILE.read()
+dnaSeq = fastaFILE.readlines()
 fastaFILE.close()
-dnaSeq.split('\n')
-print(dnaSeq)
 
-# Convert file DNA sequence data to a string and separate each sequence
-#str(dnaSeq)
-#dnaSeq.split('>')
-#print(dnaSeq)
-# split contents at IDS
-# extract DNA sequences as strings
-# Convert strings lists
-# add characters to dictionaries
-# calculate GC content and percentage
-# print ID + GC content
+
+
+# Create variables to store the working DNA sequence and ID
+currentID = ""              # current working Rosalind ID
+currentDNA = ""             # current working DNA sequence
+dictionaryResults = {}      # contains Rosalind IDs and associated GC contents
+
+# store the GC concent as the key and rosalind ID as the value to allow looking up the rosalind ID by the GC content later on
+
+# While loop to separate and store Rosalind IDs
+while dnaSeq is True:
+    fileLine = dnaSeq.readlines()
+    if fileLine is ">Rosalind*":
+        if currentID is not "":#
+            currentID = fileLine[1:]
+            currentDNA = ""
+            dictionaryResults.update({GCcontentCalculator(currentDNA): currentID})
+    else:
+        currentDNA = currentDNA + fileLine
+
+# Add last Rosalind-DNA sequence pair to dictionary
+dictionaryResults.update({GCcontentCalculator(currentDNA): currentID})
+
+
+
+# Find highest GC content
+allGCcontents = []
+
+for GCcontent in dictionaryResults.items():
+    allGCcontents.append(GCcontent)
+
+allGCcontents.sort()
+
+# print RosalindID and corresponding GC content with highest GC content
+if allGCcontents[-1] in dictionaryResults:
+    print(dictionaryResults[allGCcontents[-1]], allGCcontents[-1])
