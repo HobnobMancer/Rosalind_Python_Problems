@@ -37,6 +37,10 @@ for index in substringOccurencePYTHON:
     substringOccurence0BASED.append(substringOccurencePYTHON[i]+1)
     i += 1
 
-print('0-based: ', substringOccurencePYTHON)
 print('1-based: ', substringOccurence0BASED)
 
+# Remove commas
+stringAnswer = str(substringOccurence0BASED)
+stringAnswer = stringAnswer.replace(',', '')
+
+print(stringAnswer)
