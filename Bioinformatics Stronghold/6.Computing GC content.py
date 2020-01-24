@@ -5,6 +5,26 @@
 # Return: The ID of the string having the highest GC-content, followed by the GC-content of that string. Rosalind allows for a default error of 0.001 in all decimal answers unless otherwise stated; please see the note on absolute error below.
 
 
+# Define GC computing function
+def GCcontentCalculator(string):
+    """Calculates the GC nucleotide content of a given DNA string as a percentage"""
+
+    # create empty dictionary to store nucleotide counts
+    nucleotideCount = {}
+
+    # count nucleotides
+    for nucleotide in string:
+        if nucleotide not in nucleotideCount:
+            nucleotideCount[nucleotide] = {}
+            nucleotideCount[nucleotide] = 1
+        else:
+            if nucleotide in nucleotideCount:
+                nucleotideCount[nucleotide] +=1
+
+    # Calculate GC content
+    GCcontent = int(((nucleotideCount["C"] + nucleotideCount["G"]) / len(string)) * 100)
+
+
 # Open file containing DNA sequences, and assign DNA sequences data to a variable (dnaSeq)
 fastaFILE = open(r"/home/em/PycharmProjects/Rosalind/Bioinformatics Stronghold/CG_content_testFile", "rt")
 dnaSeq = fastaFILE.read()
