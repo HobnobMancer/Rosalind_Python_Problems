@@ -12,20 +12,21 @@ def GCcontentCalculator(string):
     # create empty dictionary to store nucleotide counts
     nucleotideCount = {}
 
+    # Convert string to list so that nucleotides can be looped/cycled through
+    nucleotideList = list(string)
+
     # count nucleotides
-    for nucleotide in string:
+    for nucleotide in nucleotideList:
         if nucleotide not in nucleotideCount:
             nucleotideCount[nucleotide] = {}
             nucleotideCount[nucleotide] = 1
         else:
             if nucleotide in nucleotideCount:
-                nucleotideCount[nucleotide] +=1
+                nucleotideCount[nucleotide] += 1
 
     # Calculate GC content
-    GCcontent = int(((nucleotideCount["C"] + nucleotideCount["G"]) / len(string)) * 100)
-    return GCcontent
-
-
+    GCcontent = ((nucleotideCount["C"] + nucleotideCount["G"]) / len(string)) * 100)
+    return int(GCcontent)
 
 
 
@@ -37,7 +38,6 @@ dnaSeq = fastaFILE.readlines()
 fastaFILE.close()
 
 
-
 # Separate IDs and store with associated GC counts as percentage
 
 # Create variables to store the working DNA sequence and ID
@@ -45,11 +45,19 @@ currentID = ""              # current working Rosalind ID
 currentDNA = ""             # current working DNA sequence
 dictionaryResults = {}      # contains Rosalind IDs and associated GC contents
 
+# Create first entries into dictionary
+    # Create first Rosalind ID
 firstLine = dnaSeq[0]
 firstID = firstLine[1:]
-firstSeq = dnaSeq[1] + dnaSeq[2]
 
-dictionaryResults[GCcontentCalculator(dnaSeq[1]+dnaSeq[2])] = firstID
+    # Create first DNA sequence, as string on a single line
+firstSeq = dnaSeq[1] + dnaSeq[2]
+firstSequence = firstSeq.replace('\n', '')
+
+ # Add first DNA sequence and Rosalind ID to the dictionary
+dictionaryResults[GCcontentCalculator(firstSequence)] = firstID
+print(dictionaryResults)
+
 
 # While loop to separate and store Rosalind IDs
 while dnaSeq is True:
@@ -61,14 +69,12 @@ while dnaSeq is True:
             currentDNA = ""
     else:
         strngFileline = str(fileLine)
-        currentDNA = currentDNA + fileLine
+        currentDNA = currentDNA + strngFileline
+        currentDNA = currentDNA.replace('\n', '')
         print(currentDNA)
 
 # Add last Rosalind-DNA sequence pair to dictionary
 dictionaryResults[GCcontentCalculator(currentDNA)] = currentID
-
-
-
 
 
 # Find highest GC content
