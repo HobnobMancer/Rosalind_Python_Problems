@@ -23,9 +23,13 @@ def GCcontentCalculator(string):
 
     # Calculate GC content
     GCcontent = int(((nucleotideCount["C"] + nucleotideCount["G"]) / len(string)) * 100)
+    return GCcontent
 
 
 
+
+
+# Prepare Data (Tested and Works)
 # open file with read only permit, read line by line
 # Open file containing DNA sequences, and assign DNA sequences data to a variable (dnaSeq)
 fastaFILE = open(r"/home/em/PycharmProjects/Rosalind/Bioinformatics Stronghold/CG_content_testFile", "rt")
@@ -34,26 +38,36 @@ fastaFILE.close()
 
 
 
+# Separate IDs and store with associated GC counts as percentage
+
 # Create variables to store the working DNA sequence and ID
 currentID = ""              # current working Rosalind ID
 currentDNA = ""             # current working DNA sequence
 dictionaryResults = {}      # contains Rosalind IDs and associated GC contents
 
-# store the GC concent as the key and rosalind ID as the value to allow looking up the rosalind ID by the GC content later on
+firstLine = dnaSeq[0]
+firstID = firstLine[1:]
+firstSeq = dnaSeq[1] + dnaSeq[2]
+
+dictionaryResults[GCcontentCalculator(dnaSeq[1]+dnaSeq[2])] = firstID
 
 # While loop to separate and store Rosalind IDs
 while dnaSeq is True:
     fileLine = dnaSeq.readlines()
     if fileLine is ">Rosalind*":
-        if currentID is not "":#
+        if currentID is not "":
             currentID = fileLine[1:]
+            dictionaryResults[GCcontentCalculator(currentDNA)] = currentID
             currentDNA = ""
-            dictionaryResults.update({GCcontentCalculator(currentDNA): currentID})
     else:
+        strngFileline = str(fileLine)
         currentDNA = currentDNA + fileLine
+        print(currentDNA)
 
 # Add last Rosalind-DNA sequence pair to dictionary
-dictionaryResults.update({GCcontentCalculator(currentDNA): currentID})
+dictionaryResults[GCcontentCalculator(currentDNA)] = currentID
+
+
 
 
 
@@ -64,7 +78,8 @@ for GCcontent in dictionaryResults.items():
     allGCcontents.append(GCcontent)
 
 allGCcontents.sort()
+print(allGCcontents)
 
-# print RosalindID and corresponding GC content with highest GC content
+# Print RosalindID and corresponding GC content with highest GC content
 if allGCcontents[-1] in dictionaryResults:
     print(dictionaryResults[allGCcontents[-1]], allGCcontents[-1])
