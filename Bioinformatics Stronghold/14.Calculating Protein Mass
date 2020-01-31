@@ -1,0 +1,53 @@
+# Given a protein string of length at most 1000 aa
+# Return the total weight of the protein; consult the monoisotopic mass table
+
+
+# Define function to find the total mass of protein given its amino acid sequence
+def calculateProteinMass(proteinSeq):
+    """Given the amino acid sequence of a protein sequence the function will calculate the total mass of said protein
+    by totalling the mass of its contained amino acids.
+    Protein sequences must be given in string format"""
+
+    # Intialise mass calculating with a mass of 0 to which amino acid masses can be added
+    proteinMass = 0
+
+    # Convert proteinSeq which is provided as a string into list format
+    aminoAcidSeq = list(proteinSeq)
+
+    # Loop through each character of protein sequence, find corresponding mass, add to proteinMass variable
+    for aminoAcid in aminoAcidSeq:
+        proteinMass += aaMassTable[aminoAcid]
+    return proteinMass
+
+
+# Create dictionary storing amino acids and associated masses
+aaMassTable = {
+    'A': 71.03711,
+    'C': 103.00919,
+    'D': 115.02694,
+    'E': 129.04259,
+    'F': 147.06841,
+    'G': 57.02146,
+    'H': 137.05891,
+    'I': 113.08406,
+    'K': 128.09496,
+    'L': 113.08406,
+    'M': 131.04049,
+    'N': 114.04293,
+    'P': 97.05276,
+    'Q': 128.05858,
+    'R': 156.10111,
+    'S': 87.03203,
+    'T': 101.04768,
+    'V': 99.06841,
+    'W': 186.07931,
+    'Y': 163.06333
+    }
+
+
+# User inputs the given protein sequence
+givenProteinSeq = str(input("What is the amino acid sequence of the protein"))
+proteinSeq = givenProteinSeq.upper()
+
+# Use protein mass calculating function to return the mass of a given protein
+print("The mass of the protein, based on its amino acid content is", calculateProteinMass(proteinSeq))
