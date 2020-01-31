@@ -25,7 +25,7 @@ def GCcontentCalculator(string):
                 nucleotideCount[nucleotide] += 1
 
     # Calculate GC content
-    GCcontent = ((nucleotideCount["C"] + nucleotideCount["G"]) / len(string)) * 100)
+    GCcontent = ((nucleotideCount['C'] + nucleotideCount['G']) / (len(string)) * 100)
     return int(GCcontent)
 
 
@@ -56,7 +56,6 @@ firstSequence = firstSeq.replace('\n', '')
 
  # Add first DNA sequence and Rosalind ID to the dictionary
 dictionaryResults[GCcontentCalculator(firstSequence)] = firstID
-print(dictionaryResults)
 
 
 # While loop to separate and store Rosalind IDs
