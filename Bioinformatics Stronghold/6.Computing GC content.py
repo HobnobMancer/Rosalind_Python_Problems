@@ -27,7 +27,6 @@ def GCcontentCalculator(string):
                 nucleotideCount[nucleotide] += 1
 
     # Calculate GC content
-    print(nucleotideCount)
     GCcontent = ((nucleotideCount['C'] + nucleotideCount['G']) / (len(string)) * 100)
     return float(GCcontent)
 
