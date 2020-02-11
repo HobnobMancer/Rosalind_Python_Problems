@@ -30,7 +30,7 @@ for fileLine in allData:
         currentDNA = ""
     else:
         strngFileline = str(fileLine)
-        currentDNA = currentDNA + strngFileline[:-1]
+        currentDNA = currentDNA + strngFileline.replace('\n','')
         if currentID not in idSeqDictionary.values():
             idSeqDictionary[currentDNA] = currentID
         else:
@@ -42,17 +42,20 @@ for fileLine in allData:
 # transfer DNA sequences from dictionary to list (intronSEQ)
 intronSEQ = list(idSeqDictionary.keys())
 
-
 # separate gene sequence from introns
 givenGENE = intronSEQ[0]
 del intronSEQ[0]
-print('GENE', givenGENE)
-print(intronSEQ)
+
+
+
+
 
 # remove introns from gene
+# set up storage variables
 exonSEQ = ""        # exon nucleotide sequence of gene
 index = 0           # index number of intron in intronSEQ list
 
+# seqeuntial removal of introns from gene sequence
 for intron in intronSEQ:
     if index is 0:
         intron = intronSEQ[index]
@@ -61,7 +64,6 @@ for intron in intronSEQ:
     else:
         intron = intronSEQ[index]
         exonSEQ = exonSEQ.replace(intron, "")
-        print(index, "=", exonSEQ)
         index += 1
 
 
@@ -69,6 +71,12 @@ for intron in intronSEQ:
 
 
 # translate DNA sequence of gene into protein sequence
+
+# separate nucleotides into 3 nucleotide codons, use inbuilt wrap function
+dnaCodenSeq = []
+codonLength = 3
+for codon in range(0, len(exonSEQ), codonLength):
+   dnaCodenSeq.append(exonSEQ[codon: codon + codonLength])
 
 # Create DNA codon to amino acid translation dictionary
 dnaCodonDICTIONARY = {"TTT": "F", "CTT": "L", "ATT": "I", "GTT": "V",
@@ -81,20 +89,14 @@ dnaCodonDICTIONARY = {"TTT": "F", "CTT": "L", "ATT": "I", "GTT": "V",
                       "TCG": "S", "CCG": "P", "ACG": "T", "GCG": "A",
                       "TAT": "Y", "CAT": "H", "AAT": "N", "GAT": "D",
                       "TAC": "Y", "CAC": "H", "AAC": "N", "GAC": "D",
-                      "TAA": "STOP", "CAA": "Q", "AAA": "K", "GAA": "E",
-                      "TAG": "STOP", "CAG": "Q", "AAG": "K", "GAG": "E",
+                      "TAA": "stop", "CAA": "Q", "AAA": "K", "GAA": "E",
+                      "TAG": "stop", "CAG": "Q", "AAG": "K", "GAG": "E",
                       "TGT": "C", "CGT": "R", "AGT": "S", "GGT": "G",
                       "TGC": "C", "CGC": "R", "AGC": "S", "GGC": "G",
-                      "TGA": "STOP", "CGA": "R", "AGA": "R", "GGA": "G",
+                      "TGA": "stop", "CGA": "R", "AGA": "R", "GGA": "G",
                       "TGG": "W", "CGG": "R", "AGG": "R", "GGG": "G"
                       }
 
-# separate nucleotides into 3 nucleotide codons, use inbuilt wrap function
-dnaCodenSeq = []
-codonLength = 3
-for codon in range(0, len(exonSEQ), codonLength):
-   dnaCodenSeq.append(exonSEQ[codon: codon + codonLength])
-print(dnaCodenSeq)
 # loop through list of codons in gene to find corresponding amino acid
 proteinSeq = ""
 for codon in dnaCodenSeq:
