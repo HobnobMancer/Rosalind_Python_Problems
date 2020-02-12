@@ -26,7 +26,7 @@ for i in itertools.permutations(intergerList):
 # output number of permutations
 print(permutationCount)
 with open("output.txt", "a") as f:
-    print(permutationCount)
+    print(permutationCount, file=f)
 
 # create output in correct style (e.g. '1 2 3 4') for permutations
 for i in range(len(permutationList)):
