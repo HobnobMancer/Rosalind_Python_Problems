@@ -1,56 +1,28 @@
-# Given: At most 15 UniProt Protein Database access IDs.
-# Return: For each protein possessing the N-glycosylation motif, output its given access ID followed by a list of locations in the protein string where the motif can be found.
-
-# take IDs and add into http://www.uniprot.org/uniprot/id-here.fasta
-# N-glycosylaion motif: N{P}[ST]{P}.
-# when {+} means any amino acid except +
-# and when [+ =] means with amino acid + or =
-
-
-# Example output:
-# B5ZC00
-# 85 118 142 306 395
-
-
-
 # Prepare Data
+
+# Extract IDs from text file
 # open file with read only permit, read line by line
 # Open file containing UniProt IDs, and assign IDs to a variable (uniprotIDs)
-fastaFILES = open(r"/home/em/PycharmProjects/Rosalind/Bioinformatics Stronghold/UniProtIDs", "rt")
+fastaFILES = open(r"C:\Users\Emma\Documents\PhD\Computational\Python\Rosalind\Rosalind_Python_Problems\Bioinformatics Stronghold\UniProtIDs.txt", "rt")
 uniprotIDs = fastaFILES.readlines()
 fastaFILES.close()
 
 uniProtDICTIONARY = {}
 currentSEQ = ""
 
-for fileLINE in uniprotIDs:
-    workingADDRESS = "http://www.uniprot.org/uniprot/" + fileLINE + ".fasta"
-    workingADDRESS = workingADDRESS.replace('\n','')
-    workingTEXT = open(workingADDRESS, 'rt')
-    workingLINES = workingTEXT.readlines()
-    workingTEXT.close()
-    while workingLINES is True:
-        for line in workingLINES:
-            if line[0] is not ">":
-                currentSEQ = currentSEQ + line
-    uniprotIDs[fileLINE] = currentSEQ
-    print(uniprotIDs)
 
-    #workingSEQ = open(r, workingADDRESS, rt)
-    #http://www.uniprot.org/uniprot/fileLINE.fasta
-    # extract protein sequence from http://www.uniprot.org/uniprot/fileLINE.fasta
-    # make sure to take from the second line, when the sequence starts
-    # add to dictionary as key
+# Transfer IDs to list and remove new line character
+uniprotIDsLIST = [] # create new empty list to store UniProt IDs
 
-# find N glycosyation motif
-# N-glycosylaion motif: N{P}[ST]{P}.
-# i = 0
-# for i in fastaSeq
-#   if N:
-#       if i+1 is not P:
-#           if i+2 is S or T:
-#               if i+3 is not P:
-#                   add to dictionarty
-#                   dictionaryNAME['key'].append(i)
+for i in uniprotIDs:
+    workingID = i.replace('\n','')
+    uniprotIDsLIST.append(workingID)
 
-# print dictionary
+
+# Access and extract protein sequences, storing them in a single FASTA file
+for i in range(len(uniprotIDsLIST)):
+    workingURL = "http://www.uniprot.org/uniprot/" + uniprotIDsLIST[i] + ".fasta"
+    sequence = urlopen(workingURL)
+    fastaData = sequence.read().decode('utf-8', 'ignore')
+    with open('seq_file.fasta', 'a') as text_file:
+        text_file.write(fastaData)
