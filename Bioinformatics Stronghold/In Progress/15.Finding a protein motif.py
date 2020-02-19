@@ -1,3 +1,22 @@
+# Given: At most 15 UniProt Protein Database access IDs.
+# Return: For each protein possessing the N-glycosylation motif, output its given access ID followed by a list of locations in the protein string where the motif can be found.
+
+# take IDs and add into http://www.uniprot.org/uniprot/id-here.fasta
+# N-glycosylaion motif: N{P}[ST]{P}.
+# when {+} means any amino acid except +
+# and when [+ =] means with amino acid + or =
+
+
+# Example output:
+# B5ZC00
+# 85 118 142 306 395
+
+
+
+from urllib.request import urlopen
+
+
+
 # Prepare Data
 
 # Extract IDs from text file
@@ -26,3 +45,20 @@ for i in range(len(uniprotIDsLIST)):
     fastaData = sequence.read().decode('utf-8', 'ignore')
     with open('seq_file.fasta', 'a') as text_file:
         text_file.write(fastaData)
+
+
+
+# Find N-glycosylation motif in protein sequences
+# N-glycosylaion motif: N{P}[ST]{P}.
+
+
+# i = 0
+# for i in fastaSeq
+#   if N:
+#       if i+1 is not P:
+#           if i+2 is S or T:
+#               if i+3 is not P:
+#                   add to dictionarty
+#                   dictionaryNAME['key'].append(i)
+
+# print dictionary
