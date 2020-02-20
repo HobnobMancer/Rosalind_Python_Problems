@@ -19,7 +19,6 @@
 
 from urllib.request import urlopen
 from Bio import SeqIO
-import re
 
 
 
