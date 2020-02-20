@@ -13,6 +13,10 @@
 
 
 
+
+# NOTE! Before starting delete existing 'seq_fasta.fasta' file from the project folder, the programme will not overwrite
+# the old fasta file and thus new sequences will not be evaluated
+
 from urllib.request import urlopen
 from Bio import SeqIO
 import re
