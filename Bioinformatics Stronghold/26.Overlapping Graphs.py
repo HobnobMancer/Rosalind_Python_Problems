@@ -5,6 +5,8 @@
 
 
 
+# Basic Python Approach
+
 
 # Define function that compares the suffix of one sequence to the prefix of the other to see if the sequences are
 # adjacent
@@ -41,8 +43,8 @@ def adjacencyCheck(seqSuffix, seqPrefix):
                 # add directed edge to the list 'directedEdgeRosalindIDs'
                 directedEdgeRosalindIDs.append(string_ID_dictionary[seqSuffix])
                 directedEdgeRosalindIDs.append(string_ID_dictionary[seqPrefix])
-                directedEdgeRosalindIDs.append('\n') # so that when the list is finally printed each directed edge
-                                                     # is printed on a new line
+                directedEdgeRosalindIDs.append('NewLine') # this will facilitate printing out each directed edge on
+                                                          # on a separate line
 
                 # convert the directed edge into a string, from a list, and ensure correct formating
                 # e.g. 'Rosalind_0498 Rosalind_2391'
@@ -87,6 +89,7 @@ for fileLine in rawStringData:
             string_ID_dictionary[currentDNA] = currentID
 
 
+
 # Gather string sequences into single list
 allStringSequences = []
 for key in string_ID_dictionary.keys():
@@ -112,16 +115,48 @@ for element in directedEdges:
     if element != None:
         result.append(element)
 
-print(result)
 result = str(result)
-print('string:', result)
-result = result.strip('\n')
-result = result.replace(' \\n','\n')
-result = result.replace("'","")
-result = result.replace("[","")
-result = result.replace("]","")
-result = result.replace(",","")
-result = result.replace('"','')
-
-
+result = result.replace('"', '')
+result = result.replace("' 'NewLine'], ['", "\n")
+result = result.replace("[['", "")
+result = result.replace("' 'NewLine']]", "")
+result = result.replace("' '", " ")
 print(result)
+
+
+
+# BioPython Approach
+
+from Bio import SeqIO
+
+prefixes = []
+suffixes = []
+handle = open('samplefile.fasta', 'r')
+for record in SeqIO.parse(handle, 'fasta'):
+    count1 = 0
+    count2 = 0
+    prefix = [record.id]
+    suffix = [record.id]
+    pre = ''
+    suf = ''
+    for nt in record.seq:
+        if count1 < 3:
+            pre += nt
+            count1 += 1
+    prefix.append(pre)
+    for tn in reversed(record.seq):
+        if count2 < 3:
+            suf += tn
+            count2 += 1
+    suffix.append(''.join(reversed(suf)))
+    prefixes.append(prefix)
+    suffixes.append(suffix)
+handle.close()
+
+for i, k in enumerate(suffixes):
+    currentsf = suffixes[i][1]
+    currentid = suffixes[i][0]
+    for j, l in enumerate(prefixes):
+        if currentsf == prefixes[j][1] and currentid != prefixes[j][0]:
+            print(currentid, prefixes[j][0])   
+ 
