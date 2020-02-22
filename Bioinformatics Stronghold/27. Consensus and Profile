@@ -1,0 +1,65 @@
+# Given a collection of at most 10 DNA strings of equal length (at most 1 kbp) in FASTA format
+# Return a consesnsus string and profile matrix for the collection (if several possible consesnsus strings exist,
+# then you may return any one of them)
+
+# Example output:
+# ATGCAACT
+# A: 5 1 0 0 5 5 0 0
+# C: 0 0 1 4 2 0 6 1
+# G: 1 1 6 3 0 1 0 0
+# T: 1 5 0 0 0 1 1 6
+
+import numpy
+from Bio import SeqIO
+
+# Extract and prepare data
+allSequencesList = [] # create empty list to store all sequences in
+
+# add sequences from given fasta file to list containing all sequences, passing through one record/sequence at a time
+handle = open('Consensus+Profile.fasta', 'r')
+for record in SeqIO.parse(handle, 'fasta'):
+    individualSequence = []
+    for nucleotide in record.seq:
+        individualSequence.extend(nucleotide)
+    allSequencesList.append(individualSequence)
+
+# Create the profile matrix, this will store the total count of each nucleotide for each given sequence
+# Initially create an empty profile matrix
+
+profileMatrix = [[0] * len(allSequencesList)] * 4 # creates an empty matrix of 4 rows (one for each nucleotide: A, C, G
+# and T in the that order from top to bottom, and a column for each nucleotide in the given sequence
+
+# Fill out the profile matrix, adding a value of 1 to each nucleotide respecitve row (A, C, G, T going left to right)
+# as pass through the sequence, one nucleotide at a time
+profileMatrix = numpy.zeros((4, len(allSequencesList[0])), dtype=numpy.int)
+for i, line in enumerate(allSequencesList):
+    for j, nucleotide in enumerate(line):
+        if nucleotide is 'A':
+            profileMatrix[0][j] += 1
+        elif nucleotide is 'C':
+            profileMatrix[1][j] += 1
+        elif nucleotide is 'G':
+            profileMatrix[2][j] += 1
+        elif nucleotide is 'T':
+            profileMatrix[3][j] += 1
+
+
+# Create consensus matrix to find the consensus sequence
+consensusSequence = "" # create empty string to store consensus sequence
+
+for A, C, G, T in zip(profileMatrix[0], profileMatrix[1], profileMatrix[2], profileMatrix[3]):
+    if A >= C and A >= G and A >=T:
+        consensusSequence += 'A'
+    elif C >= A and C>= G and C >= T:
+        consensusSequence += 'C'
+    elif G >= A and G>= C and G >= T:
+        consensusSequence += 'G'
+    elif T >= A and T >= C and T >= G:
+        consensusSequence += 'T'
+
+# Output the consensus sequence
+print(consensusSequence)
+print('A: ' + ' '.join(str(e) for e in profileMatrix[0]))
+print('C: ' + ' '.join(str(e) for e in profileMatrix[1]))
+print('G: ' + ' '.join(str(e) for e in profileMatrix[2]))
+print('T: ' + ' '.join(str(e) for e in profileMatrix[3]))
